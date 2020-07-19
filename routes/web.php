@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','HomeController@home')->name('home');
 Route::get('/login','HomeController@login')->name('login');
 Route::post('/login', 'HomeController@postLogin')->name('post-login');
 
 Route::middleware('auth')->group(function(){
+    Route::get('/','HomeController@home')->name('home');
     Route::get('/business-type','HomeController@getBusinessTypes')->name('business-type');
     Route::post('/add-business-type','HomeController@addBusinessType')->name('add-business-type');
     
