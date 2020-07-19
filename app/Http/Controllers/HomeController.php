@@ -38,6 +38,9 @@ class HomeController extends Controller
 
     public function getRoles()
     {
+        if(Auth::user()->role->role_name != 'admin'){
+            return back()->withError('You do not have permossio to enter this page');
+        }
         $roles = Role::get();
         return view('roles', compact('roles'));
     }
