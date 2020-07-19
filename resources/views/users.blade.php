@@ -19,7 +19,9 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
+    @if (!Auth::user()->role->role_name == 'collector')
     <button type="button" class="btn btn-sm float-right btn-success" data-toggle="modal" data-target="#myModal">Add User</button>
+    @endif
     <h6 class="m-0 font-weight-bold text-primary">Users</h6>
   </div>
   <div class="card-body">
@@ -40,7 +42,9 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ ucfirst($user->role->role_name) }}</td>
                 <td>
+                  @if (!Auth::user()->role->role_name == 'collector')
                   <button class="btn btn-sm btn-success edit-user" data-name="{{ $user->name }}" data-email="{{ $user->email }}" data-role="{{ $user->role_id }}" data-id="{{ $user->id }}" data-toggle="modal" data-target="#updateModal">Edit</button>
+                  @endif
                 </td>
               </tr>
           @endforeach
