@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/roles', 'HomeController@getRoles')->name('roles');
     
     Route::get('/public-data', 'DataController@getData')->name('public-data');
-    Route::get('/add-public-data', 'HomeController@addData')->name('add-public-data');
+    Route::get('/add-public-data', 'DataController@addDataView')->name('add-public-data');
     Route::post('/add-data', 'DataController@addData')->name('add-data');
     Route::get('/edit-data/{id}', 'DataController@editData')->name('edit-data');
     Route::get('/view-data/{id}', 'DataController@viewData')->name('view-data');

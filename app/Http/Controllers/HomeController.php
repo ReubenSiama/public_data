@@ -19,11 +19,6 @@ class HomeController extends Controller
     {
         return view('login');
     }
-    public function addData()
-    {
-        $bTypes = BusinessType::get();
-        return view('add-public-data', compact('bTypes'));
-    }
 
     public function getBusinessTypes()
     {

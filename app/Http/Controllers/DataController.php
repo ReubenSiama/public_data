@@ -18,9 +18,16 @@ class DataController extends Controller
         $public_data = PublicData::get();
         return view('public-data', compact('public_data'));
     }
+
+    public function addDataView()
+    {
+        $bTypes = BusinessType::where('status','Approved')->get();
+        return view('add-public-data', compact('bTypes'));
+    }
+
     public function editData($id)
     {
-        $bTypes = BusinessType::get();
+        $bTypes = BusinessType::where('status','Approved')->get();
         $public_data = PublicData::findOrFail($id);
         return view('edit-data', compact('public_data', 'bTypes'));
     }
