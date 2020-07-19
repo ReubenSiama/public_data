@@ -96,4 +96,17 @@ class HomeController extends Controller
             return back()->withError('Invalid Credentials');
         }
     }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
+    public function approveBusinessType($id)
+    {
+        $bType = BusinessType::findOrFail($id);
+        $bType->status = 'Approved';
+        $bType->save();
+        return back();
+    }
 }

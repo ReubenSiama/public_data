@@ -16,7 +16,7 @@ class CreateWhatsappNumbersTable extends Migration
         Schema::create('whatsapp_numbers', function (Blueprint $table) {
             $table->id();
             $table->integer('public_data_id');
-            $table->string('whatsapp_number');
+            $table->string('whatsapp_number')->nullable();
             $table->timestamps();
         });
     }

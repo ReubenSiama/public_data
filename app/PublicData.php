@@ -10,4 +10,19 @@ class PublicData extends Model
     {
         return $this->belongsTo(BusinessType::class);
     }
+
+    public function mobile_number()
+    {
+        return $this->hasMany(MobileNumber::class);
+    }
+    
+    public function whatsapp_number()
+    {
+        return $this->hasMany(WhatsappNumber::class);
+    }
+
+    public function email_id()
+    {
+        return $this->hasMany(EmailId::class);
+    }
 }

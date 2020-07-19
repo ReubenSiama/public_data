@@ -16,7 +16,9 @@
           <tr>
             <th>Type</th>
             <th>Description</th>
+            @if (Auth::user()->role->role_name == 'admin')
             <th>Action</th>
+            @endif
           </tr>
         </thead>
         <tbody>
@@ -25,8 +27,13 @@
                 <td>{{ $type->business_type }}</td>
                 <td>{{ $type->description }}</td>
                 <td>
-                  <button class="btn btn-sm btn-success">Approve</button>
-                </td>
+                  @if (Auth::user()->role->role_name == 'admin' && $type->status == 'Pending')
+                  <form action="{{ route('approve-business-type', $type->id) }}" method="post">
+                    @csrf
+                    <button class="btn btn-sm btn-success">Approve</button>
+                  </form>
+                  @endif
+                </td>    
               </tr>
           @endforeach
         </tbody>

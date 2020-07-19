@@ -27,8 +27,8 @@
                 <td>{{ $data->company_firm_name }}</td>
                 <td>{{ $data->address_line_1 }}, {{ $data->address_line_2 }}, {{ $data->district }}, PIN: {{ $data->pin_code }}</td>
                 <td>
-                  <button class="btn btn-sm btn-success">View</button>
-                  <button class="btn btn-sm btn-success">Edit</button>
+                  <a href="{{ route('view-data', $data->id) }}" class="btn btn-sm btn-success">View</a>
+                  <a href="{{ route('edit-data', $data->id) }}" class="btn btn-sm btn-success">Edit</a>
                 </td>
               </tr>
           @endforeach

@@ -16,7 +16,7 @@ class CreateEmailIdsTable extends Migration
         Schema::create('email_ids', function (Blueprint $table) {
             $table->id();
             $table->integer('public_data_id');
-            $table->string('email_id');
+            $table->string('email_id')->nullable();
             $table->timestamps();
         });
     }
