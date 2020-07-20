@@ -31,6 +31,10 @@ class HomeController extends Controller
 
     public function addBusinessType(Request $request)
     {
+        $request->validate([
+            'business_type' => 'required',
+            'description' => 'required',
+        ]);
         $bType = new BusinessType;
         $bType->business_type = $request->business_type;
         $bType->description = $request->description;
@@ -115,6 +119,9 @@ class HomeController extends Controller
 
     public function addRole(Request $request)
     {
+        $request->validate([
+            'role_name' => 'required',
+        ]);
         $role = new Role;
         $role->role_name = $request->role_name;
         $role->save();

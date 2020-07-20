@@ -53,7 +53,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" name="role_name" id="role" class="form-control" placeholder="Role">
+            <input required type="text" name="role_name" id="role" class="form-control" placeholder="Role">
         </div>
       </div>
 
