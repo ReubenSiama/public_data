@@ -6,7 +6,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    @if (Auth::user()->role->role_name != 'data collector')
+    @if (Auth::user()->role->role_name != 'Data Collector')
     <button type="button" class="btn btn-sm float-right btn-success" data-toggle="modal" data-target="#myModal">Add Business Type</button>
     @endif
     <h6 class="m-0 font-weight-bold text-primary">Business Types</h6>
@@ -63,7 +63,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" name="business_type" id="businessType" class="form-control" placeholder="Business Type">
+            <input requried type="text" name="business_type" id="businessType" class="form-control" placeholder="Business Type">
         </div>
         <div class="form-group"><input required type="text" name="description" id="description" class="form-control" placeholder="Description"></div>
       </div>
