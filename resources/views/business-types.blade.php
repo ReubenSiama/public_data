@@ -18,7 +18,7 @@
           <tr>
             <th>Type</th>
             <th>Description</th>
-            @if (Auth::user()->role->role_name == 'admin')
+            @if (Auth::user()->role->role_name == 'Admin')
             <th>Action</th>
             @endif
           </tr>
@@ -29,7 +29,7 @@
                 <td>{{ $type->business_type }}</td>
                 <td>{{ $type->description }}</td>
                 <td>
-                  @if (Auth::user()->role->role_name == 'admin' && $type->status == 'Pending')
+                  @if (Auth::user()->role->role_name == 'Admin' && $type->status == 'Pending')
                   <form action="{{ route('approve-business-type', $type->id) }}" method="post">
                     @csrf
                     <button class="btn btn-sm btn-success">Approve</button>
