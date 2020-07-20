@@ -34,7 +34,7 @@ class HomeController extends Controller
         $bType = new BusinessType;
         $bType->business_type = $request->business_type;
         $bType->description = $request->description;
-        if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'Admin'){
+        if(Auth::user()->role->role_name == 'Admin'){
             $bType->status = 'Approved';
         }
         $bType->save();
@@ -43,7 +43,7 @@ class HomeController extends Controller
 
     public function getRoles()
     {
-        if(Auth::user()->role->role_name != 'admin' || Auth::user()->role->role_name == 'Admin'){
+        if(Auth::user()->role->role_name == 'Admin'){
             return back()->withError('You do not have permossio to enter this page');
         }
         $roles = Role::get();
