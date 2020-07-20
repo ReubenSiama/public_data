@@ -64,7 +64,7 @@
         <span>Users</span>
       </a>
     </li>
-    <li class="nav-item {{ Route::is('role') ? 'active' : '' }}">
+    <li class="nav-item {{ Route::is('roles') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('roles') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Roles</span>
