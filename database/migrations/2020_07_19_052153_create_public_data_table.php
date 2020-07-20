@@ -31,6 +31,7 @@ class CreatePublicDataTable extends Migration
             $table->string('address_line_2')->nullable();
             $table->string('district');
             $table->string('pin_code');
+            $table->date('add_date');
             $table->timestamps();
         });
     }

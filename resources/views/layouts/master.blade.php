@@ -17,6 +17,32 @@
 
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+  <style>
+    .required:after {
+      content:" *";
+      color: red;
+    }
+    .bg-gradient-primary{
+      background-image: linear-gradient(orange, gray);
+    }
+    .text-primary{
+      color: gray !important;
+    }
+    .btn-success{
+      border: none !important;
+      outline: none !important;
+      background-color: gray;
+      color: white;
+    }
+    .btn-success:hover{
+      background-color: rgb(177, 173, 173);
+      color: white;
+    }
+    .btn-success:focus{
+      background-color: gray;
+      color: white;
+    }
+  </style>
 
 </head>
 

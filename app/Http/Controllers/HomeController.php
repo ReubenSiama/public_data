@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\BusinessType;
+use App\DailyReport;
+use App\PublicData;
 use App\Role;
 use App\User;
 use Auth;
@@ -32,6 +34,9 @@ class HomeController extends Controller
         $bType = new BusinessType;
         $bType->business_type = $request->business_type;
         $bType->description = $request->description;
+        if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'Admin'){
+            $bType->status = 'Approved';
+        }
         $bType->save();
         return back();
     }
@@ -106,5 +111,43 @@ class HomeController extends Controller
         $bType->status = 'Approved';
         $bType->save();
         return back();
+    }
+
+    public function addRole(Request $request)
+    {
+        $role = new Role;
+        $role->role_name = $request->role_name;
+        $role->save();
+        return back();
+    }
+
+    public function updateRole(Request $request)
+    {
+        $role = Role::findOrFail($request->id);
+        $role->role_name = $request->role_name;
+        $role->save();
+        return back();
+    }
+
+    public function deleteRole(Request $request)
+    {
+        Role::findOrFail($request->id)->delete();
+        return back();
+    }
+
+    public function getReports(Request $request)
+    {
+        $users = User::get();
+        $select_date = $request->date;
+
+        $reports = DailyReport::when($select_date, function ($query, $select_date) {
+            return $query->where('report_date',$select_date);
+        }, function ($query) {
+            return $query->where('report_date', Date('Y-m-d'));
+        })
+        ->get();
+        $dates = DailyReport::groupBy('report_date')->pluck('report_date');
+        return view('reports', compact('reports', 'dates'));
+        
     }
 }

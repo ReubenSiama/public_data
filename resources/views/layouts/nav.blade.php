@@ -37,13 +37,20 @@
       </li>
 
     <!-- Nav Item - Tables -->
-
+@if (Auth::user()->role->role_name != 'Data Collector')
     <li class="nav-item {{ Route::is('business-type') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('business-type') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Business Types</span>
         </a>
     </li>
+
+    <li class="nav-item {{ Route::is('reports') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('reports') }}">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Daily Reports</span>
+      </a>
+  </li>
     
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
@@ -63,7 +70,7 @@
           <span>Roles</span>
         </a>
     </li>
-
+@endif
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
       <button class="rounded-circle border-0" id="sidebarToggle"></button>

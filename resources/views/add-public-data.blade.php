@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="business_type">Business Type:</label>
+            <label for="business_type" class="required">Business Type:</label>
             <select required name="business_type_id" id="business_type" class="form-control form-control-sm">
               <option value="">--select--</option>
               @foreach ($bTypes as $type)
@@ -30,7 +30,7 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="company_firm_name">Company / Firm Name:</label>
+            <label for="company_firm_name" class="required">Company / Firm Name:</label>
             <input value="{{ old('company_firm_name') }}" required type="text" id="comapny_name" name="company_firm_name" class="form-control form-control-sm" placeholder="Company / Firm Name">
             @error('company_firm_name')
             <div class="alert-danger">
@@ -55,7 +55,7 @@
             <input value="{{ old('owner_contact_number') }}" type="text" id="owner_contact_number" name="owner_contact_number" class="form-control form-control-sm" placeholder="Owner Contact Number">
           </div>
           <div class="form-group">
-            <label for="mobile_number">Mobile Number:</label>
+            <label for="mobile_number" class="required">Mobile Number:</label>
             <input value="{{ old('mobile_number') }}" required type="text" id="mobile_number" name="mobile_number[]" class="form-control form-control-sm" placeholder="Mobile Number">
             @error('mobile_number')
               <div class="alert-danger">
@@ -100,7 +100,7 @@
               <i class="fas fa-fw fa-plus"></i>
             </button>
             <div class="form-group">
-                <label for="address">Address:</label>
+                <label for="address" class="required">Address:</label>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -156,7 +156,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="source">Source:</label>
+                <label for="source" class="required">Source:</label>
                 <input value="{{ old('source') }}" required type="text" id="source" name="source" class="form-control form-control-sm" placeholder="Owner Contact Number">
                 @error('source')
                     <div class="alert-danger">

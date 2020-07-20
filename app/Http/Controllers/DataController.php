@@ -2,20 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\public_data_request as PublicRequest;
-use App\PublicData;
-use App\MobileNumber;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Http\Request;
 use App\WhatsappNumber;
-use App\EmailId;
 use App\BusinessType;
+use App\MobileNumber;
+use App\DailyReport;
+use App\PublicData;
+use App\EmailId;
 use Auth;
 
 class DataController extends Controller
 {
-    public function getData()
+    public function getData(Request $request)
     {
-        $public_data = PublicData::get();
+        $ids = null;
+        if($request->phone_number_search){
+            $id = MobileNumber::where('mobile_number', $request->phone_number_search)->pluck('public_data_id')->toArray();
+            $another = WhatsappNumber::where('whatsapp_number', $request->phone_number_search)->pluck('public_data_id')->toArray();
+            $ids = array_merge($id, $another);
+        }
+
+        if($request->search){
+            $query = PublicData::query();
+            $input = $request->search;
+            $columns = Schema::getColumnListing('public_data');
+            foreach($columns as $column){
+                $query->orWhere($column, 'LIKE', '%' . $input . '%');
+            }
+            $public_data = $query->paginate(10);
+            return view('public-data', compact('public_data'));
+        }
+        $user = Auth::user()->role->role_name != 'Data Collector';
+        $public_data = PublicData::when(!$user, function ($query, $user) {
+            return $query->where('added_by',Auth::user()->id);
+        })->when($ids, function ($query, $ids) {
+            return $query->whereIn('id',$ids);
+        })->paginate(10);
         return view('public-data', compact('public_data'));
     }
 
@@ -50,32 +74,45 @@ class DataController extends Controller
         $public_data->source = $request->source;
         $public_data->gst_number = $request->gst_number;
         $public_data->remark = $request->remark;
-        $public_data->save();
-
-        if(count($request->mobile_number) != 0){
-            foreach($request->mobile_number as $mobile){
-                $mobileNumber = new MobileNumber;
-                $mobileNumber->public_data_id = $public_data->id;
-                $mobileNumber->mobile_number = $mobile;
-                $mobileNumber->save();
+        $public_data->add_date = Date('Y-m-d');
+        if($public_data->save()){
+            if(count($request->mobile_number) != 0){
+                foreach($request->mobile_number as $mobile){
+                    $mobileNumber = new MobileNumber;
+                    $mobileNumber->public_data_id = $public_data->id;
+                    $mobileNumber->mobile_number = $mobile;
+                    $mobileNumber->save();
+                }
             }
-        }
-        if(count($request->whatsapp_number) != 0){
-            foreach($request->whatsapp_number as $whatsapp){
-                $whatsappNumber = new WhatsappNumber;
-                $whatsappNumber->public_data_id = $public_data->id;
-                $whatsappNumber->whatsapp_number = $whatsapp;
-                $whatsappNumber->save();
+            if(count($request->whatsapp_number) != 0){
+                foreach($request->whatsapp_number as $whatsapp){
+                    $whatsappNumber = new WhatsappNumber;
+                    $whatsappNumber->public_data_id = $public_data->id;
+                    $whatsappNumber->whatsapp_number = $whatsapp;
+                    $whatsappNumber->save();
+                }
             }
-        }
-        if(count($request->email_id) != 0){
-            foreach($request->email_id as $email){
-                $email_id = new EmailId;
-                $email_id->public_data_id = $public_data->id;
-                $email_id->email_id = $email;
-                $email_id->save();
+            if(count($request->email_id) != 0){
+                foreach($request->email_id as $email){
+                    $email_id = new EmailId;
+                    $email_id->public_data_id = $public_data->id;
+                    $email_id->email_id = $email;
+                    $email_id->save();
+                }
             }
-        }
+            $report = DailyReport::where('user_id', Auth::user()->id)->where('report_date', Date('Y-m-d'))->first();
+            if($report == null){
+                $generateReport = new DailyReport;
+                $generateReport->user_id = Auth::user()->id;
+                $generateReport->report_date = Date('Y-m-d');
+                $generateReport->number_of_records = 1;
+                $generateReport->save();
+            }else{
+                $report = $report->increment('number_of_records');
+            }
+        }else{
+            return back()->withError('Oosp!! Something Went Wrong');
+        };
         return back()->withSuccess('Data Added Successfully');
     }
 

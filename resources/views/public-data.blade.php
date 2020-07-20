@@ -6,10 +6,27 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    {{-- <button type="button" class="btn btn-sm float-right btn-success" data-toggle="modal" data-target="#myModal">Add Business Type</button> --}}
     <h6 class="m-0 font-weight-bold text-primary">Data Collected</h6>
   </div>
   <div class="card-body">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-4">
+          <form action="" method="get">
+            <input type="text" name="phone_number_search" id="" placeholder="Phone Number">
+            <button>Search</button>
+          </form>
+        </div>
+        <div class="col-md-4 offset-4">
+          @if (Auth::user()->role->role_name != 'Data Collector')
+          <form action="" method="get">
+            <input type="text" name="search" id="" placeholder="Search">
+            <button>Go!</button>
+          </form>
+          @endif
+        </div>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -35,14 +52,13 @@
         </tbody>
       </table>
     </div>
+    <div class="col-md-4 offset-5">
+      {{ $public_data->links() }}
+    </div>
   </div>
 </div>
 @endsection
 
 @section('scripts')
-    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/datatables-demo.js"></script>
 @endsection

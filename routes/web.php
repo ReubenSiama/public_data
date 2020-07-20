@@ -25,6 +25,9 @@ Route::middleware('auth')->group(function(){
     Route::post('/approve-business-type/{id}','HomeController@approveBusinessType')->name('approve-business-type');
 
     Route::get('/roles', 'HomeController@getRoles')->name('roles');
+    Route::post('/add-role','HomeController@addRole')->name('add-role');
+    Route::put('/update-role','HomeController@updateRole')->name('update-role');
+    Route::delete('/delete-role','HomeController@deleteRole')->name('delete-role');
     
     Route::get('/public-data', 'DataController@getData')->name('public-data');
     Route::get('/add-public-data', 'DataController@addDataView')->name('add-public-data');
@@ -37,4 +40,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/users','HomeController@getUsers')->name('get-users');
     Route::post('/add-user','HomeController@addUser')->name('add-user');
     Route::put('/update-user','HomeController@updateUser')->name('update-user');
+
+    Route::get('/report', 'HomeController@getReports')->name('reports');
 });

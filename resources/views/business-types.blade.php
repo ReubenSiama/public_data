@@ -6,7 +6,9 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
+    @if (Auth::user()->role->role_name != 'data collector')
     <button type="button" class="btn btn-sm float-right btn-success" data-toggle="modal" data-target="#myModal">Add Business Type</button>
+    @endif
     <h6 class="m-0 font-weight-bold text-primary">Business Types</h6>
   </div>
   <div class="card-body">
