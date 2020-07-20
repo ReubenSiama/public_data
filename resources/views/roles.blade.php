@@ -24,7 +24,7 @@
                 <td>{{ $role->role_name }}</td>
                 <td>
                   <button class="edit btn btn-sm btn-success" data-toggle="modal" data-target="#editRole" data-id="{{ $role->id }}" data-role="{{ $role->role_name }}">Edit</button>
-                  <button class="delete btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteRole" data-id="{{ $role->id }}" data-role="{{ $role->role_name }}">Delete</button>
+                  {{-- <button class="delete btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteRole" data-id="{{ $role->id }}" data-role="{{ $role->role_name }}">Delete</button> --}}
                 </td>
               </tr>
           @endforeach
