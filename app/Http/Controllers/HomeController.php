@@ -130,6 +130,9 @@ class HomeController extends Controller
 
     public function updateRole(Request $request)
     {
+        $request->validate([
+            'role_name' => 'required',
+        ]);
         $role = Role::findOrFail($request->id);
         $role->role_name = $request->role_name;
         $role->save();
