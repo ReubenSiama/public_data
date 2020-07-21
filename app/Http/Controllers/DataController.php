@@ -36,7 +36,7 @@ class DataController extends Controller
         }
         $user = Auth::user()->role->role_name != 'Data Collector';
         $public_data = PublicData::when(!$user, function ($query, $user) {
-            return $query->where('added_by',Auth::user()->id);
+            return $query->where('added_by',Auth::user()->id)->where('add_date', Date('Y-m-d'));
         })->when($ids, function ($query, $ids) {
             return $query->whereIn('id',$ids);
         })->paginate(10);
