@@ -45,6 +45,15 @@ class HomeController extends Controller
         return back();
     }
 
+    public function editBusinessType(Request $request)
+    {
+        $bType = BusinessType::findOrFail($request->id);
+        $bType->business_type = $request->business_type;
+        $bType->description = $request->description;
+        $bType->save();
+        return back()->withSuccess('Business Type Edit Successfully');
+    }
+
     public function getRoles()
     {
         if(Auth::user()->role->role_name != 'Admin'){

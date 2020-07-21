@@ -20,7 +20,7 @@
             <select required name="business_type_id" id="business_type" class="form-control form-control-sm">
               <option value="">--select--</option>
               @foreach ($bTypes as $type)
-                <option {{ old('business_type_id') == $type->id ? 'selected': '' }} value="{{ $type->id }}">{{$type->business_type}}</option>
+                <option title="{{ $type->description }}" {{ old('business_type_id') == $type->id ? 'selected': '' }} value="{{ $type->id }}">{{$type->business_type}}</option>
               @endforeach
             </select>
             @error('business_type_id')

@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/business-type','HomeController@getBusinessTypes')->name('business-type');
     Route::post('/add-business-type','HomeController@addBusinessType')->name('add-business-type');
     Route::post('/approve-business-type/{id}','HomeController@approveBusinessType')->name('approve-business-type');
+    Route::put('/edit-business-type', 'HomeController@editBusinessType')->name('edit-business-type');
 
     Route::get('/roles', 'HomeController@getRoles')->name('roles');
     Route::post('/add-role','HomeController@addRole')->name('add-role');

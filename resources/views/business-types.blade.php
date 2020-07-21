@@ -35,6 +35,9 @@
                     <button class="btn btn-sm btn-success">Approve</button>
                   </form>
                   @endif
+                  @if (Auth::user()->role->role_name == 'Admin')
+                    <button class="edit btn btn-sm btn-success" data-id="{{ $type->id }}" data-type="{{ $type->business_type }}" data-description="{{ $type->description }}" data-toggle="modal" data-target="#editBusinessType">Edit</button>
+                  @endif
                 </td>    
               </tr>
           @endforeach
@@ -78,4 +81,51 @@
     </div>
   </div>
 </form>
+
+<!-- The Modal -->
+<form action="{{ route('edit-business-type') }}" method="post">
+  @csrf
+  <input type="hidden" name="id" id="id">
+  <input type="hidden" name="_method" value="PUT">
+  <div class="modal fade" id="editBusinessType">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Business Type</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="form-group">
+            <input required type="text" name="business_type" id="editBusinessType" class="form-control" placeholder="Business Type">
+        </div>
+        <div class="form-group"><input required type="text" name="description" id="editDescription" class="form-control" placeholder="Description"></div>
+      </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success btn-sm">Save</button>
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+@endsection
+
+@section('scripts')
+    <script>
+      $('button.edit').on('click', function(){
+        let id = $(this).data('id');
+        let type = $(this).data('type');
+        let description = $(this).data('description');
+        $('input#id').val(id);
+        $('input#editBusinessType').val(type);
+        $('input#editDescription').val(description);
+      });
+    </script>
 @endsection
