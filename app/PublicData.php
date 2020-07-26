@@ -25,4 +25,14 @@ class PublicData extends Model
     {
         return $this->hasMany(EmailId::class);
     }
+
+    public function addedBY()
+    {
+        return $this->belongsTo(User::class,'added_by');
+    }
+
+    public function editedBy()
+    {
+        return $this->belongsTo(User::class,'edited_by');
+    }
 }

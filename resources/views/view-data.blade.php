@@ -13,8 +13,12 @@
                     <em>{{ $public_data->BusinessType->business_type }}</em>
                 </div>
                 <div class="form-group">
-                    <label for="businessType">Added By :</label>
-                    <em>{{ $public_data->added_by }}</em>
+                    <label for="added_by">Added By :</label>
+                    <em>{{ $public_data->addedBy->name }}</em>
+                </div>
+                <div class="form-group">
+                    <label for="edited_by">Edited By :</label>
+                    <em>{{ $public_data->edited_by != null ? $public_data->editedBy->name : '' }}</em>
                 </div>
                 <div class="form-group">
                     <label for="businessType">Company / Firm Name :</label>
@@ -42,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label for="businessType">Website :</label>
-                    <em>{{ $public_data->website }}</em>
+                    <em><a href="{{ $public_data->website }}">{{ $public_data->website }}</a></em>
                 </div>
             </div>
             <div class="col-md-6">
@@ -57,6 +61,12 @@
                 <div class="form-group">
                     <label for="businessType">Address :</label>
                     <em>{{ $public_data->address_line_1 }}, {{ $public_data->address_line_2 }}, {{ $public_data->district }} PIN: {{ $public_data->pin_code }}</em>
+                </div>
+                <div class="form-group">
+                    <label for="address_link">Address Link:</label>
+                    <em>@if ($public_data->address_link != null)
+                        <a href="{{ $public_data->address_link }}">View Address</a>
+                    @endif</em>
                 </div>
                 <div class="form-group">
                     <label for="businessType">Remark :</label>
@@ -83,7 +93,7 @@
                     <label for="businessType">Whatsapp Numbers :</label>
                     <br>
                     @foreach ($public_data->whatsapp_number as $number)
-                    <em>{{ $number->whatsapp_number }}</em><br>    
+                    <em><a target="blank" href="https://api.whatsapp.com/send?phone=91{{ $number->whatsapp_number }}">{{ $number->whatsapp_number }}</a></em><br>    
                     @endforeach
                 </div>
             </div>

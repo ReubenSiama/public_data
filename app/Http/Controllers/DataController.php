@@ -17,7 +17,9 @@ class DataController extends Controller
 {
     public function getData(Request $request)
     {
+        $bTypes = BusinessType::where('status','Approved')->get();
         $ids = null;
+        $filter = $request->business_type;
         if($request->phone_number_search){
             $id = MobileNumber::where('mobile_number', $request->phone_number_search)->pluck('public_data_id')->toArray();
             $another = WhatsappNumber::where('whatsapp_number', $request->phone_number_search)->pluck('public_data_id')->toArray();
@@ -31,16 +33,18 @@ class DataController extends Controller
             foreach($columns as $column){
                 $query->orWhere($column, 'LIKE', '%' . $input . '%');
             }
-            $public_data = $query->paginate(10);
-            return view('public-data', compact('public_data'));
+            $ids = $query->pluck('id')->toArray();
         }
+        
         $user = Auth::user()->role->role_name != 'Data Collector';
         $public_data = PublicData::when(!$user, function ($query, $user) {
             return $query->where('added_by',Auth::user()->id)->where('add_date', Date('Y-m-d'));
         })->when($ids, function ($query, $ids) {
             return $query->whereIn('id',$ids);
+        })->when($filter, function($query, $filter){
+            return $query->where('business_type_id', $filter);
         })->paginate(10);
-        return view('public-data', compact('public_data'));
+        return view('public-data', compact('public_data', 'bTypes'));
     }
 
     public function addDataView()
@@ -74,8 +78,11 @@ class DataController extends Controller
         $public_data->source = $request->source;
         $public_data->gst_number = $request->gst_number;
         $public_data->remark = $request->remark;
+        $public_data->address_link = $request->address_link;
         $public_data->add_date = Date('Y-m-d');
         if($public_data->save()){
+            $public_data->data_id = 'MH_Z1_91_'.sprintf('%04d', $public_data->id);
+            $public_data->save();
             if(count($request->mobile_number) != 0){
                 foreach($request->mobile_number as $mobile){
                     $mobileNumber = new MobileNumber;
@@ -134,6 +141,10 @@ class DataController extends Controller
                 EmailId::findOrFail($email_id->id)->delete();
             }
         }
+        $public_data->edited_by = Auth::user()->id;
+        if($public_data->data_id == null){
+            $public_data->data_id = 'MH_Z1_91_'.sprintf('%04d', $public_data->id);
+        }
         $public_data->business_type_id = $request->business_type_id;
         $public_data->company_firm_name = $request->company_firm_name;
         $public_data->contact_person_name = $request->contact_person_name;
@@ -149,6 +160,7 @@ class DataController extends Controller
         $public_data->source = $request->source;
         $public_data->gst_number = $request->gst_number;
         $public_data->remark = $request->remark;
+        $public_data->address_link = $request->address_link;
         $public_data->save();
 
         if(count($request->mobile_number) != 0){
@@ -182,5 +194,13 @@ class DataController extends Controller
     {
         $public_data = PublicData::findOrFail($id);
         return view('view-data', compact('public_data'));
+    }
+
+    public function verifyData($id)
+    {
+        $public_data = PublicData::findOrFail($id);
+        $public_data->verification_status = 'Verified';
+        $public_data->save();
+        return back();
     }
 }

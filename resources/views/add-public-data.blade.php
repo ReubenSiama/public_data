@@ -174,6 +174,10 @@
                 @enderror
             </div>
             <div class="form-group">
+              <label for="address_link">Address Link</label>
+              <input type="text" name="address_link" id="address_link" class="form-control form-control-sm" placeholder="Address Link">
+            </div>
+            <div class="form-group">
                 <label for="remark">Remark:</label>
                 <textarea name="remark" id="remark" cols="10" rows="2" class="form-control" placeholder="Remark"></textarea>
             </div>

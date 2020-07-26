@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/add-data', 'DataController@addData')->name('add-data');
     Route::get('/edit-data/{id}', 'DataController@editData')->name('edit-data');
     Route::get('/view-data/{id}', 'DataController@viewData')->name('view-data');
+    Route::get('/verify-data/{id}','DataController@verifyData')->name('verify-data');
 
     Route::post('/save-data/{id}','DataController@saveEditData')->name('save-update-data');
     
