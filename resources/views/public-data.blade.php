@@ -17,7 +17,7 @@
             <button>Search</button>
           </form>
         </div>
-        <div class="col-md-6 offset-2">
+        <div class="col-md-8">
           @if (Auth::user()->role->role_name != 'Data Collector')
           <form action="" method="get">
             <select name="business_type" id="bType">
