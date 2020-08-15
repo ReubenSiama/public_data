@@ -157,7 +157,7 @@
             </div>
             <div class="form-group">
                 <label for="source" class="required">Source:</label>
-                <input value="{{ old('source') }}" required type="text" id="source" name="source" class="form-control form-control-sm" placeholder="Owner Contact Number">
+                <input value="{{ old('source') }}" required type="text" id="source" name="source" class="form-control form-control-sm" placeholder="Eg. LinkedIn, Referance">
                 @error('source')
                     <div class="alert-danger">
                         <strong>Error!</strong> {{ $message }}</li>
